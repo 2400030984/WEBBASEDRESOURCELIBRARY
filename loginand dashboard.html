@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Educational Resource Hub</title>
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    .page { display: none; }
+    .active { display: block; }
+
+    /* HEADER */
+    .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .logo { display: flex; align-items: center; }
+    .leaf-icon { height: 28px; width: 28px; color: #4CAF50; }
+    .auth-buttons { display: flex; gap: 10px; }
+    .auth-buttons button { padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+    .login-btn { background-color: transparent; color: #333; border: 1px solid #ccc; }
+    .signup-btn { background-color: #4CAF50; color: white; }
+    .signup-btn:hover { background-color: #45a049; }
+
+    /* MAIN CONTENT */
+    .main-content { flex-grow: 1; display: flex; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+    .search-container { width: 100%; max-width: 600px; }
+    .search-bar { width: 100%; padding: 15px 20px; font-size: 18px; border: 1px solid #ddd; border-radius: 5px; outline: none; transition: border-color 0.3s ease; }
+    .search-bar:focus { border-color: #4CAF50; }
+    .tagline { font-size: 18px; color: #666; margin-top: 15px; }
+
+    /* FOOTER */
+    .main-footer { display: flex; justify-content: center; gap: 40px; padding: 20px 40px; background-color: white; }
+    .footer-link { color: #666; text-decoration: none; font-size: 16px; transition: color 0.3s ease; }
+    .footer-link:hover { color: #4CAF50; }
+
+    /* LOGIN CARD */
+    .login-card { background-color: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; box-sizing: border-box; }
+    .login-card h2 { margin-top:0; font-size:24px; color:#333; }
+    .tab-container { display:flex; border:1px solid #ddd; border-radius:5px; margin-bottom:25px; }
+    .tab-button { flex:1; padding:10px; background-color: transparent; border:none; cursor:pointer; font-size:16px; color:#666; transition: color 0.3s ease; }
+    .tab-button.active { color:#4CAF50; border-bottom:2px solid #4CAF50; }
+
+    .form-group { margin-bottom: 20px; text-align: left; }
+    .form-group input { width: 100%; padding:12px; font-size:16px; border:1px solid #ddd; border-radius:5px; box-sizing:border-box; outline:none; transition: border-color 0.3s; }
+    .form-group input:focus { border-color: #4CAF50; }
+    .login-submit-btn { width:100%; padding:12px; background-color:#4CAF50; color:white; font-size:18px; border:none; border-radius:5px; cursor:pointer; transition: background-color 0.3s; }
+    .login-submit-btn:hover { background-color:#45a049; }
+    .forgot-password { display:block; margin-top:15px; font-size:14px; color:#666; text-decoration:none; }
+    .forgot-password:hover { color:#4CAF50; }
+
+    /* DASHBOARD */
+    .container { background:white; padding:20px; width:80%; margin:20px auto; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+    ul { list-style:none; padding:0; }
+    li { font-size:18px; margin:8px 0; color:#4CAF50; cursor:pointer; font-weight:bold; }
+    .logout-btn { padding:12px; background:#4CAF50; color:white; border:none; border-radius:5px; width:100%; margin-top:20px; cursor:pointer; text-align:center; display:block; }
+</style>
+</head>
+<body>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+    <header class="main-header">
+        <div class="logo">
+            <svg class="leaf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"/>
+            </svg>
+        </div>
+        <nav class="auth-buttons">
+            <button class="login-btn" onclick="showPage('login')">Login</button>
+            <button class="signup-btn" onclick="showPage('login')">Sign Up</button>
+        </nav>
+    </header>
+    <main class="main-content">
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Search for textbooks, papers, guides...">
+            <p class="tagline">Find the knowledge you need, fast</p>
+        </div>
+    </main>
+    <footer class="main-footer">
+        <a href="#" class="footer-link">About</a>
+        <a href="#" class="footer-link">Contact</a>
+    </footer>
+</div>
+
+<!-- LOGIN PAGE -->
+<div id="login" class="page">
+    <header class="main-header">
+        <div class="logo">
+            <svg class="leaf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"/>
+            </svg>
+        </div>
+        <nav class="auth-buttons">
+            <button class="login-btn" onclick="showPage('home')">Home</button>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="login-card">
+            <h2>Welcome Back</h2>
+            <div class="tab-container">
+                <button id="loginTab" class="tab-button active">Log In</button>
+                <button id="signupTab" class="tab-button">Sign Up</button>
+            </div>
+            <div id="loginForm">
+                <div class="form-group">
+                    <input type="text" id="loginEmail" placeholder="Email or Username">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Password">
+                </div>
+                <button class="login-submit-btn" onclick="login()">Log In</button>
+                <p id="loginMsg" style="color:red;"></p>
+            </div>
+            <div id="signupForm" style="display:none;">
+                <div class="form-group">
+                    <input type="email" id="signupEmail" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="signupPassword" placeholder="Password">
+                </div>
+                <button class="login-submit-btn" onclick="signup()">Sign Up</button>
+                <p id="signupMsg" style="color:green;"></p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- DASHBOARD PAGE -->
+<div id="dashboard" class="page">
+    <header class="main-header">
+        <h2 style="color:#4CAF50;">KL University Library Dashboard</h2>
+    </header>
+    <div class="container">
+        <h3>Subjects Available</h3>
+        <ul>
+            <li onclick="openSubject('Maths')">Maths</li>
+            <li onclick="openSubject('C Programming')">C Programming</li>
+            <li onclick="openSubject('DBMS')">DBMS</li>
+        </ul>
+        <button class="logout-btn" onclick="showPage('home')">Logout</button>
+    </div>
+</div>
+
+<script>
+    const loginTab = document.getElementById('loginTab');
+    const signupTab = document.getElementById('signupTab');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+
+    loginTab.addEventListener('click', () => {
+        loginTab.classList.add('active');
+        signupTab.classList.remove('active');
+        loginForm.style.display = 'block';
+        signupForm.style.display = 'none';
+    });
+
+    signupTab.addEventListener('click', () => {
+        signupTab.classList.add('active');
+        loginTab.classList.remove('active');
+        signupForm.style.display = 'block';
+        loginForm.style.display = 'none';
+    });
+
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function login() {
+        const email = document.getElementById('loginEmail').value;
+        const msg = document.getElementById('loginMsg');
+        if(!email.includes('@')){
+            msg.innerText = "Invalid email!";
+            return;
+        }
+        msg.innerText = "";
+        showPage('dashboard');
+    }
+
+    function signup() {
+        const msg = document.getElementById('signupMsg');
+        msg.innerText = "Sign up successful!";
+    }
+
+    function openSubject(subject){
+        alert("Opening subject: " + subject);
+    }
+</script>
+</body>
+</html>

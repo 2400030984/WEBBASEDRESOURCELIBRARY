@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Educational Resource Hub</title>
+
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #eef7ee; margin:0; padding:0; }
+    .page { display: none; }
+    .active { display: block; }
+
+    /* HEADER */
+    .main-header { display: flex; justify-content: space-between; align-items: center; padding:20px 40px; background:white; border-bottom:3px solid #3d8f42; }
+    .auth-buttons button { padding:10px 20px; border:none; border-radius:5px; font-size:16px; cursor:pointer; }
+    .login-btn-header { background:white; border:2px solid #3d8f42; color:#3d8f42; }
+    .signup-btn-header { background:#3d8f42; color:white; }
+
+    .main-content { display:flex; justify-content:center; align-items:center; padding:40px; }
+    .search-bar { width:90%; max-width:600px; padding:15px; font-size:18px; border:2px solid #3d8f42; border-radius:5px; }
+
+    /* LOGIN CARD */
+    .login-card { background:white; padding:40px; width:90%; max-width:400px; border-radius:10px; margin:40px auto; border:2px solid #3d8f42; }
+    .tab-container { display:flex; border:2px solid #3d8f42; border-radius:5px; margin-bottom:25px; }
+    .tab-button { flex:1; padding:10px; border:none; font-size:16px; color:#3d8f42; cursor:pointer; background:white; }
+    .tab-button.active { background:#3d8f42; color:white; }
+    input { width:100%; padding:12px; border:2px solid #3d8f42; border-radius:5px; margin-bottom:15px; }
+    button, .logout-btn { padding:12px; width:100%; border:none; border-radius:5px; background:#3d8f42; color:white; cursor:pointer; text-align:center; display:block; margin-bottom:10px; }
+
+    /* DASHBOARD */
+    .container { background:white; padding:20px; width:80%; margin:20px auto; border-radius:10px; border:2px solid #3d8f42; }
+    ul { list-style:none; padding:0; }
+    li { font-size:18px; margin:8px 0; color:#3d8f42; cursor:pointer; font-weight:bold; }
+  </style>
+</head>
+
+<body>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+  <header class="main-header">
+    <h2 style="color:#3d8f42;">Edu Resource Hub</h2>
+    <div class="auth-buttons">
+      <button class="login-btn-header" onclick="showPage('login')">Login</button>
+      <button class="signup-btn-header" onclick="showPage('login')">Sign Up</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div>
+      <input type="text" class="search-bar" placeholder="Search for textbooks, papers, guides...">
+      <p style="color:#3d8f42;">Find the knowledge you need, fast.</p>
+    </div>
+  </main>
+</div>
+
+<!-- LOGIN PAGE -->
+<div id="login" class="page">
+  <header class="main-header">
+    <h2 style="color:#3d8f42;">Login / Sign Up</h2>
+  </header>
+
+  <div class="login-card">
+    <h2 style="color:#3d8f42;">Welcome</h2>
+
+    <div class="tab-container">
+      <button id="loginTab" class="tab-button active">Log In</button>
+      <button id="signupTab" class="tab-button">Sign Up</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <input type="text" id="loginEmail" placeholder="Email or Username">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <button onclick="login()">Log In</button>
+      <p id="loginMsg" style="color:red;"></p>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div id="signupForm" style="display:none;">
+      <input type="text" id="signupName" placeholder="Full Name">
+      <input type="text" id="signupEmail" placeholder="Email">
+      <input type="password" id="signupPassword" placeholder="Password">
+      <button onclick="signup()">Sign Up</button>
+      <p id="signupMsg" style="color:red;"></p>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD PAGE -->
+<div id="dashboard" class="page">
+  <header class="main-header">
+    <h2 style="color:#3d8f42;">KL University Library Dashboard</h2>
+  </header>
+
+  <div class="container">
+    <h3 style="color:#3d8f42;">Subjects Available</h3>
+    <ul>
+      <li onclick="openSubject('Maths')">Maths</li>
+      <li onclick="openSubject('C Programming')">C Programming</li>
+      <li onclick="openSubject('DBMS')">DBMS</li>
+      <li onclick="openSubject('Front-End')">Front-End</li>
+      <li onclick="openSubject('English')">English</li>
+      <li onclick="openSubject('Sports')">Sports</li>
+      <li onclick="openSubject('Physics')">Physics</li>
+      <li onclick="openSubject('Chemistry')">Chemistry</li>
+      <li onclick="openSubject('Java Programming')">Java Programming</li>
+      <li onclick="openSubject('Data Structures')">Data Structures</li>
+      <li onclick="openSubject('Artificial Intelligence')">Artificial Intelligence</li>
+      <li onclick="openSubject('Machine Learning')">Machine Learning</li>
+      <li onclick="openSubject('Operating Systems')">Operating Systems</li>
+      <li onclick="openSubject('Computer Networks')">Computer Networks</li>
+    </ul>
+
+    <button class="logout-btn" onclick="showPage('home')">Logout</button>
+
+    <button class="logout-btn" onclick="showPage('feedback')">Give Feedback</button>
+  </div>
+</div>
+
+<!-- SUBJECT PAGE -->
+<div id="subjectPage" class="page">
+  <header class="main-header">
+    <h2 id="subjectTitle" style="color:#3d8f42;"></h2>
+  </header>
+  <div class="container">
+    <h3 style="color:#3d8f42;">Subject Information</h3>
+    <p id="subjectInfo" style="font-size:18px;color:#444;"></p>
+  </div>
+  <div class="container">
+    <h3 style="color:#3d8f42;">Recommended Books</h3>
+    <ul id="bookList"></ul>
+  </div>
+
+  <button class="logout-btn" onclick="showPage('dashboard')">Back to Dashboard</button>
+</div>
+
+<!-- FEEDBACK PAGE (LAST PAGE) -->
+<div id="feedback" class="page">
+  <header class="main-header">
+    <h2 style="color:#3d8f42;">Feedback Form</h2>
+  </header>
+
+  <div class="container">
+    <form action="#" method="post">
+      <label style="color:#3d8f42;">Your Name:</label>
+      <input type="text" name="name" placeholder="Enter your name" required>
+
+      <label style="color:#3d8f42;">Your Feedback:</label>
+      <textarea name="feedback" rows="5" placeholder="Write your feedback here..." required
+      style="width:100%; padding:12px; border:2px solid #3d8f42; border-radius:5px;"></textarea>
+
+      <button type="submit" class="logout-btn">Submit Feedback</button>
+      <button class="logout-btn" onclick="showPage('dashboard')" type="button">Back to Dashboard</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const loginTab = document.getElementById("loginTab");
+  const signupTab = document.getElementById("signupTab");
+  const loginForm = document.getElementById("loginForm");
+  const signupForm = document.getElementById("signupForm");
+
+  loginTab.onclick = () => {
+    loginTab.classList.add("active");
+    signupTab.classList.remove("active");
+    loginForm.style.display = "block";
+    signupForm.style.display = "none";
+  };
+
+  signupTab.onclick = () => {
+    signupTab.classList.add("active");
+    loginTab.classList.remove("active");
+    signupForm.style.display = "block";
+    loginForm.style.display = "none";
+  };
+
+  function showPage(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function login() {
+    const email = document.getElementById("loginEmail").value;
+    const pass = document.getElementById("loginPassword").value;
+    const msg = document.getElementById("loginMsg");
+
+    if(!email.includes("@")){
+      msg.innerText = "Invalid email!";
+      return;
+    }
+    msg.innerText = "";
+    showPage("dashboard");
+  }
+
+  function signup() {
+    const msg = document.getElementById("signupMsg");
+    msg.style.color="green";
+    msg.innerText="Sign up successful!";
+  }
+
+  const subjectData = {
+    "Maths": { info:"Mathematics covers calculus, algebra, trigonometry and statistics.", books:["Higher Engineering Mathematics – B.S. Grewal","Engineering Mathematics – Erwin Kreyszig"] },
+    "C Programming": { info:"C is a powerful programming language used in embedded systems and OS development.", books:["Let Us C – Yashwant Kanetkar","The C Programming Language – Dennis Ritchie"] },
+    "DBMS": { info:"DBMS deals with database design, SQL queries, and relational models.", books:["Database System Concepts – Korth","MySQL Guide"] },
+    "Front-End": { info:"Front-end development uses HTML, CSS and JavaScript.", books:["HTML & CSS – Jon Duckett","JavaScript: The Good Parts"] },
+    "English": { info:"Covers communication, grammar and technical writing.", books:["Wren & Martin Grammar","Communication Skills – Sanjay Kumar"] },
+    "Sports": { info:"Sports promotes fitness, discipline and teamwork.", books:["Sports Training Principles","Physical Education Manual"] },
+    "Physics": { info:"Physics explains laws of motion, waves, forces and energy.", books:["Concepts of Physics – H.C. Verma","University Physics – Young"] },
+    "Chemistry": { info:"Intro to organic, inorganic and physical chemistry.", books:["Organic Chemistry – Morrison Boyd","Engineering Chemistry – Jain"] },
+    "Java Programming": { info:"Java is an OOP language used for apps and Android development.", books:["Java Complete Reference – Herbert Schildt","Head First Java"] },
+    "Data Structures": { info:"Arrays, linked lists, trees, graphs, stacks and queues.", books:["Data Structures in C – Reema Thareja","Algorithms – CLRS"] },
+    "Artificial Intelligence": { info:"AI includes reasoning, search, and intelligent systems.", books:["AI – Stuart Russell","Deep Learning – Goodfellow"] },
+    "Machine Learning": { info:"ML covers supervised & unsupervised learning.", books:["Hands-On ML – Géron","Pattern Recognition – Bishop"] },
+    "Operating Systems": { info:"OS manages processes, files, memory and hardware.", books:["Operating System Concepts – Galvin","Modern OS – Tanenbaum"] },
+    "Computer Networks": { info:"Routing, IP, protocols and communication.", books:["Computer Networks – Tanenbaum","Data Communication – Forouzan"] }
+  };
+
+  function openSubject(subject){
+    document.getElementById("subjectTitle").innerText = subject;
+    document.getElementById("subjectInfo").innerText = subjectData[subject].info;
+
+    let booksHTML = "";
+    subjectData[subject].books.forEach(book => booksHTML += `<li>${book}</li>`);
+
+    document.getElementById("bookList").innerHTML = booksHTML;
+    showPage("subjectPage");
+  }
+</script>
+
+</body>
+</html>
